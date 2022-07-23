@@ -2,9 +2,9 @@
 Write properties file.
 
 # Plugin
-Plugin reports available at [plugin info](https://chonton.github.io/properties-maven-plugin/1.0.0-SNAPSHOT/plugin-info.html).
+Plugin reports available at [plugin info](https://chonton.github.io/properties-maven-plugin/plugin-info.html).
 
-There is a single goal: [write](https://chonton.github.io/properties-maven-plugin/1.0.0-SNAPSHOT/write-mojo.html),
+There is a single goal: [write](https://chonton.github.io/properties-maven-plugin/write-mojo.html),
 which by default binds to the "generate-resources" phase.  This goal writes a properties file at the
 specified location,
 
@@ -44,8 +44,8 @@ specified location,
           </execution>
         </executions>
         <configuration>
-          <defaults>../../docker.env</defaults>
-          <filename>docker.env</filename>
+          <defaults>../target/env/properties</defaults>
+          <filename>docker/env.properties</filename>
         </configuration>
       </plugin>
     </plugins>
