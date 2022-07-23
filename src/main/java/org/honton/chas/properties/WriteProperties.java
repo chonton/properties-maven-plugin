@@ -27,7 +27,7 @@ public class WriteProperties extends AbstractMojo {
   @Parameter(property = "properties.defaults")
   String defaults;
   /** Properties to save */
-  @Parameter(required = true)
+  @Parameter
   Properties properties;
   /** Comment for properties file */
   @Parameter(property = "properties.comment")
