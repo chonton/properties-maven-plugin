@@ -6,56 +6,35 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
-import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-/**
- * Write Properties
- */
+/** Write Properties */
 @Mojo(name = "write", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true)
 public class WriteProperties extends AbstractMojo {
 
-  /**
-   * Properties filename
-   */
-  @Parameter(property = "properties.filename", required = true)
-  String filename;
-
-  /**
-   * Default properties filename
-   */
-  @Parameter(property = "properties.defaults")
-  String defaults;
-
-  /**
-   * Properties to save
-   */
-  @Parameter(required = true)
-  Properties properties;
-
-  /**
-   * Comment for properties file
-   */
-  @Parameter(property = "properties.comment")
-  String comment;
-
-  /**
-   * Skip writing properties
-   */
-  @Parameter(property = "properties.skip")
-  boolean skip;
-
   @Parameter(property = "project", readonly = true)
   protected MavenProject project;
-  @Parameter(property = "session", readonly = true)
-  MavenSession session;
+  /** Properties filename */
+  @Parameter(property = "properties.filename", required = true)
+  String filename;
+  /** Default properties filename */
+  @Parameter(property = "properties.defaults")
+  String defaults;
+  /** Properties to save */
+  @Parameter(required = true)
+  Properties properties;
+  /** Comment for properties file */
+  @Parameter(property = "properties.comment")
+  String comment;
+  /** Skip writing properties */
+  @Parameter(property = "properties.skip")
+  boolean skip;
   @Parameter(property = "mojoExecution", readonly = true)
   MojoExecution execution;
 
@@ -68,7 +47,7 @@ public class WriteProperties extends AbstractMojo {
       return;
     }
 
-    buildDirectory = Path.of(project.getBuild().getOutputDirectory());
+    buildDirectory = Path.of(project.getBuild().getDirectory());
     Path location = buildDirectory.resolve(filename);
     createParentDirectory(location);
 
@@ -125,7 +104,6 @@ public class WriteProperties extends AbstractMojo {
     return properties;
   }
 
-
   private String getComment() {
     String work = comment;
     if (work == null) {
@@ -136,6 +114,6 @@ public class WriteProperties extends AbstractMojo {
     if (!work.isEmpty()) {
       return work;
     }
-    return execution.getExecutionId() + " at " + session.getRequest().getStartTime();
+    return execution.getExecutionId();
   }
 }

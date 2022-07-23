@@ -9,13 +9,13 @@ which by default binds to the "generate-resources" phase.  This goal writes a pr
 specified location,
 
 ## Configuration
-| Parameter  | Property                | Default                                       | Description                  |
-|------------|-------------------------|-----------------------------------------------|------------------------------|
-| comment    | ${properties.comment}   |                                               | Comment added to properties  |
-| defaults   | ${properties.defaults}  | Relative to ${project.build.outputDirectory}  | Filename to read defaults    |
-| filename   | ${properties.filename}  | Relative to ${project.build.outputDirectory}  | Filename to write properties |
-| properties |                         |                                               | Properties to write          |                                                                                          |
-| skip       | ${properties.skip}      | false                                         | Skip writing properties      |
+| Parameter  | Property                | Default                                | Description                  |
+|------------|-------------------------|----------------------------------------|------------------------------|
+| comment    | ${properties.comment}   |                                        | Comment added to properties  |
+| defaults   | ${properties.defaults}  | Relative to ${project.build.directory} | Filename to read defaults    |
+| filename   | ${properties.filename}  | Relative to ${project.build.directory} | Filename to write properties |
+| properties |                         |                                        | Properties to write          |                                                                                          |
+| skip       | ${properties.skip}      | false                                  | Skip writing properties      |
 
 # Examples
 
