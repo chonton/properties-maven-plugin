@@ -5,8 +5,8 @@ Write properties file.
 Plugin reports available at [plugin info](https://chonton.github.io/properties-maven-plugin/plugin-info.html).
 
 There is a single goal: [write](https://chonton.github.io/properties-maven-plugin/write-mojo.html),
-which by default binds to the "generate-resources" phase.  This goal writes a properties file at the
-specified location,
+which by default binds to the "generate-resources" phase.  This goal reads properties from the `defaults` location,
+adds properties specified in the configuration, and writes a properties file at the `filename` location.
 
 ## Configuration
 | Parameter  | Property                | Default                                | Description                  |
