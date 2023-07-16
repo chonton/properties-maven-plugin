@@ -3,6 +3,7 @@ package org.honton.chas.properties;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
@@ -27,14 +28,14 @@ public class WriteProperties extends AbstractMojo {
   @Parameter(property = "properties.defaults")
   String defaults;
   /** Properties to save */
-  @Parameter
-  Properties properties;
+  @Parameter Properties properties;
   /** Comment for properties file */
   @Parameter(property = "properties.comment")
   String comment;
   /** Skip writing properties */
   @Parameter(property = "properties.skip")
   boolean skip;
+
   @Parameter(property = "mojoExecution", readonly = true)
   MojoExecution execution;
 
@@ -85,10 +86,25 @@ public class WriteProperties extends AbstractMojo {
   private void writeProperties(Path location, Properties properties) throws MojoExecutionException {
     getLog().debug("Saving " + location);
     try (BufferedWriter bw = Files.newBufferedWriter(location)) {
-      properties.store(bw, getComment());
-      getLog().debug("Saved " + location);
-    } catch (IOException e) {
+
+      String comment = getComment();
+      if (comment != null) {
+        bw.append("# ").append(comment);
+        bw.newLine();
+      }
+
+      properties.forEach((key, value) -> writeProperties(bw, key, value));
+    } catch (IOException | UncheckedIOException e) {
       throw new MojoExecutionException("Unable to write " + location, e);
+    }
+  }
+
+  private void writeProperties(BufferedWriter bw, Object key, Object value) {
+    try {
+      bw.append(key.toString()).append('=').append(value.toString());
+      bw.newLine();
+    } catch (IOException ioException) {
+      throw new UncheckedIOException(ioException);
     }
   }
 
